@@ -4,28 +4,125 @@
     <title>MVP: Moody Foodie</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch" rel="stylesheet">
+        <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    
     <style>
-      
+        body {
+            background: #E44D26;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #F16529, #E44D26);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #F16529, #E44D26); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+        
+        label {
+            font-size:150%;
+            color:white;
+        }
+        
+        .jumbotron {
+            text-align:center;
+            font-family: 'Cabin Sketch', cursive;
+        }
+        
+        .text {
+            color: black;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: #FFFFFF;
+        }
+        .container:hover .overlay {
+            opacity: .5;
+        }
+        
+        #form {
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 70px;
+            padding-left: 80px;
+        }
+            
+
+        
     </style>
   </head>
   
   <body>
-      <form id="form" action="#">
-                <br/>
-                <br/>
-            	<label>Enter your maximum calories</label>
-            	<input id="calories" type="text">
-            	<br>
+      <div class="jumbotron">
+          <h1>MOodY FOoDie</h1>
+          <p>What are you in the mood for?</p>
+      </div>
+      
+      <div class="container">
+          <form id="form" action="#">
+              
+                <label>Enter your maximum calories</label>
+            	<input class="input-field col s5" id="calories" type="text">
+            	
+            	
             	<label>Enter what kind of food you want</label>
-            	<input id="search_input" type="text">
-            	<br>
-            	<button type="button" id="submit_food_btn">Submit</button>
+            	<input id="search_input" type="text"> 
+            	
+            <button id="submit_food_btn" class="btn waves-effect waves-light" type="button" name="action">Sumbit
+                <i class="material-icons right"></i>
+            </button>
+            	<!--<button type="button" id="submit_food_btn">Submit</button>-->
             </form>
-        <div id = "recipes"></div>
+            
+        </div>
+        
+        
+         <div class="container">
+                        <div class="col-lg-4" id="happy">
+                            <img src="http://beglobal.club/wp-content/uploads/2016/01/42528712954ddebef15fe09.93531036.jpg" class="img-responsive">
+                            <div class="overlay">
+                                <div class="text">Energized</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <img src="https://timedotcom.files.wordpress.com/2015/08/hangry-time-peter-oumanski.jpg?quality=85" class="img-responsive">
+                            <div class="overlay">
+                                <div class="text">Hangry</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <img src="" class="img-responsive img-circle">
+                        </div>
+        </div>
+        
+            
+            
+            
+        <div class="container">
+            <div id = "recipes"></div>
+        </div>
+        
         
     <script>
+    $(document).ready(function() {
+    $('select').material_select();
+});
     
     $(function (){
 	$('#submit_food_btn').click(function (event){
@@ -45,12 +142,6 @@ function printRecipes(recipes){
   for(i = 0; i < recipes.length; i++){
    // get the name of the recipe
     $('#recipes').append("<h2>" + recipes[i].recipeName + "</h2>")
-    
-    //lets try to get the calories of the recipe
-    // for (f = 0; f < recipes[i].flavors.length; f++){
-    // $('#recipes').append("<h2>" + recipes[i].flavors[f] + "</h2>")
-  
-    // } 
     
     //get the img of the recipe
     $('#recipes').append("<img src=\"" + recipes[i].imageUrlsBySize["90"] + "\">")
@@ -85,7 +176,11 @@ function getRecipes(search_term, calories) {
     printRecipes(recipes)
   });
 }
- </script>   
+
+
+
+ </script> 
+
     
   </body>
 </html>

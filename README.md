@@ -2,7 +2,7 @@
 
 Candy Ruiz and Steven Rosario [And link to your live project url.](/)
 
-![Example project image](example.png)
+![Example project image](Screenshot.png)
 
 Extra kudos if you make a GIF for your project example image.
 

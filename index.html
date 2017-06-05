@@ -22,6 +22,12 @@
             /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #F16529, #E44D26);
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            flex-wrap: wrap;
+        }
+        
+        img {
+            border: 1px solid #021a40;
+          
         }
         
         label {
@@ -29,14 +35,16 @@
             color: white;
         }
         
+
+        
         .jumbotron {
             text-align: center;
             font-family: 'Cabin Sketch', cursive;
         }
         
         .text {
-            color: black;
-            font-size: 20px;
+            color: #00000;
+            font-size: 50px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -53,12 +61,16 @@
             height: 100%;
             width: 100%;
             opacity: 0;
-            transition: .5s ease;
+            transition: .7s ease;
             background-color: #FFFFFF;
         }
         
-        .container:hover .overlay {
-            opacity: .5;
+        #energized:hover .overlay {
+            opacity: .7;
+        }
+        
+        #hangry:hover .overlay {
+            opacity: .7;
         }
         
         #hangry{
@@ -71,6 +83,11 @@
             padding-bottom: 70px;
             padding-left: 80px;
         }
+        
+        #lazy:hover .overlay {
+            opacity: .7;
+        }
+        
     </style>
 </head>
 
@@ -78,33 +95,34 @@
     <div class="jumbotron">
         <h1>MOodY FOoDie</h1>
         <p>What are you in the mood for?</p>
+        
     </div>
 
     <div class="container">
-        <form id="form" action="#">
+        <form id="form" action = "results.html">
 
-            <label>Enter your maximum calories</label>
-            <input class="input-field col s5" id="calories" type="text">
+            <label>How long do you want to cook? (Minutes) </label>
+            <input class="input-field col s5" id="calories" name = "calories" type="text">
 
 
             <label>Enter what kind of food you want</label>
-            <input id="search_input" type="text">
-
-            <button id="submit_food_btn" class="btn waves-effect waves-light" type="button" name="action">Sumbit
-                <i class="material-icons right"></i>
-            </button>
+            <input id="search_input" name = "search_input" type="text">
+            
+            <!-- class="btn waves-effect waves-light" -->
+            <input id="submit_food_btn" class="btn waves-effect waves-light" type="submit" name="action">
+            </input>
             <!--<button type="button" id="submit_food_btn">Submit</button>-->
         </form>
 
     </div>
 
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4" id="happy">
-                <img src="http://beglobal.club/wp-content/uploads/2016/01/42528712954ddebef15fe09.93531036.jpg" class="img-responsive">
+<div class="container">
+    <div class="row">
+        <form id="form" action = "results.html">
+            <div class="col-lg-4" id="energized">
+                <img src="https://s-media-cache-ak0.pinimg.com/originals/05/a8/03/05a80361a70f4289f52a05ee45a2c7b7.jpg" class="img-responsive">
                 <div class="overlay">
-                    <div class="text">Energized</div>
+                    <div class="text" type="submit" name="action">Energized</div>
                 </div>
             </div>
 
@@ -115,16 +133,20 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <img src="" class="img-responsive img-circle">
+            <div class="col-lg-4" id="lazy">
+                <img src="https://byronsheroes.files.wordpress.com/2016/03/hammock2.jpg?w=590" class="img-responsive">
+                <div class="overlay">
+                    <div class="text">Lazy</div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 
 
 
     <div class="container">
-        <div id="recipes"></div>
+        <div class="content" id="recipes"></div>
     </div>
 
 
@@ -134,22 +156,56 @@
         });
 
         $(function() {
-            $('#submit_food_btn').click(function(event) {
-                $('#recipes').empty();
+            // $('#submit_food_btn').click(function(event) {
+            //     $('#recipes').empty();
 
-                event.preventDefault();
+            //     event.preventDefault();
 
-                var calories = $('#calories').val();
-                var search_term = $('#search_input').val();
+            //     var calories = $('#calories').val();
+            //     var search_term = $('#search_input').val();
 
-                getRecipes(search_term, calories)
-            });
+            //     getRecipes(search_term, calories)
+            // });
         });
-    var link = 'www.yummly.co/#recipe/' + recipes[i].id
+        
+         
+       // energized button 
+        $("#energized").click(function() {
+                    var url = 'https://api.yummly.com/v1/api/recipes?_app_id=4e9f2aa0%26&_app_key=e54e9cfa05d58b64bab7da2301f05c0b' + '&maxTotalTimeInSeconds=7200'
+                    $.get(url, function(data) {
+                        var recipes = data.matches
+                        printRecipes(recipes)
+                        
+                    });
+                })
+                
+          $("#hangry").click(function() {
+                    var url = 'https://api.yummly.com/v1/api/recipes?_app_id=4e9f2aa0%26&_app_key=e54e9cfa05d58b64bab7da2301f05c0b' + '&maxTotalTimeInSeconds=3600'
+                    $.get(url, function(data) {
+                        var recipes = data.matches
+                        printRecipes(recipes)
+                        
+                    });
+                })
+                
+         $("#lazy").click(function() {
+                    var url = 'https://api.yummly.com/v1/api/recipes?_app_id=4e9f2aa0%26&_app_key=e54e9cfa05d58b64bab7da2301f05c0b' + '&maxTotalTimeInSeconds=1800' 
+                    $.get(url, function(data) {
+                        var recipes = data.matches
+                        printRecipes(recipes)
+                    
+                    });
+                })
+                
+        
         function printRecipes(recipes) {
 
             for (i = 0; i < recipes.length; i++) {
                 
+                 var link = 'http://www.yummly.co/#recipe/' + recipes[i].id
+                 
+                 
+                 
                 // get the name of the recipe
                 $('#recipes').append("<h2><a href="+ link + ">" + recipes[i].recipeName + "</a></h2>")
 
@@ -173,19 +229,22 @@
 
         function getRecipes(search_term, calories) {
             if (calories != parseInt(calories, 10)) {
-                alert("you have to enter a number");
+                // alert("You have to enter a number!");
                 document.getElementById("calories").value = "";
                 return
             }
 
             var url = 'https://api.yummly.com/v1/api/recipes?_app_id=4e9f2aa0%26&_app_key=e54e9cfa05d58b64bab7da2301f05c0b&q=' +
-                search_term + '&nutrition.ENERC_KCAL.max=' + calories
+                search_term + '&maxTotalTimeInSeconds=' + calories
 
-            $.get(url, link, function(data) {
+            $.get(url,  function(data) {
                 var recipes = data.matches
                 printRecipes(recipes)
+                //window.location.replace("results.html");
             });
         }
+        
+    
     </script>
 
 
